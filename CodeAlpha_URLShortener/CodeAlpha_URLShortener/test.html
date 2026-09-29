@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>URL Shortener Test</title>
+</head>
+<body>
+
+    <h2>CodeAlpha URL Shortener</h2>
+
+    <input type="text" id="urlInput" placeholder="Enter long URL">
+    <button onclick="shortenUrl()">Shorten URL</button>
+
+    <p id="result"></p>
+
+    <script>
+        async function shortenUrl() {
+            const originalUrl = document.getElementById("urlInput").value;
+
+            const response = await fetch("http://localhost:3000/shorten", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    originalUrl: originalUrl
+                })
+            });
+
+            const data = await response.json();
+
+            document.getElementById("result").innerHTML =
+                `<a href="${data.shortUrl}" target="_blank">
+                    ${data.shortUrl}
+                </a>`;
+        }
+    </script>
+
+</body>
+</html>
